@@ -33,6 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastPrompt = '';
   let lastTitle = '';
   let lastCategory = '';
+  let autoPostTimer = null;
+  let countdownInterval = null;
 
   // Initialize
   updateStatus('ready', 'Ready to generate content');
@@ -59,20 +61,28 @@ document.addEventListener('DOMContentLoaded', () => {
     rightEye.className = `eye right-eye ${type}`;
   }
 
-  function showLoading(message = 'Processing...') {
+  function showLoading(message = 'Processing...', hideOthers = true) {
     updateStatus('loading', message);
     loadingDiv.classList.remove('hidden');
-    hideAllOtherStates();
+    generateBtn.classList.add('hidden');
+    if (hideOthers) {
+      hideAllOtherStates();
+    } else {
+      // Hide only the result content, keep form visible
+      resultDiv.classList.add('hidden');
+    }
   }
 
   function hideLoading() {
     loadingDiv.classList.add('hidden');
+    generateBtn.classList.remove('hidden');
   }
 
   function hideAllOtherStates() {
     resultDiv.classList.add('hidden');
     successDiv.classList.add('hidden');
     errorDiv.classList.add('hidden');
+    form.classList.add('hidden');
   }
 
   function showError(message) {
@@ -120,6 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStatus('success', 'WordPress post created successfully!');
     successDiv.classList.remove('hidden');
     hideLoading();
+    form.classList.remove('hidden'); // Show the form so user can generate new content
+    // Keep result content hidden after successful post
+    resultDiv.classList.add('hidden');
     stopThinking();
   }
 
@@ -168,6 +181,72 @@ document.addEventListener('DOMContentLoaded', () => {
       btnLoading.classList.remove('show');
       button.disabled = false;
     }
+  }
+
+  // Auto-post countdown functions
+  function startAutoPostCountdown() {
+    // Clear any existing timers
+    clearAutoPostTimers();
+    
+    let timeLeft = 30;
+    const totalTime = 30;
+    const btnText = confirmBtn.querySelector('.btn-text');
+    
+    // Add countdown styling
+    confirmBtn.classList.add('countdown');
+    
+    // Update button text immediately
+    btnText.textContent = `Post to WordPress (${timeLeft}s)`;
+    
+    // Update progress bar immediately
+    updateProgressBar(timeLeft, totalTime);
+    
+    // Start countdown interval
+    countdownInterval = setInterval(() => {
+      timeLeft--;
+      btnText.textContent = `Post to WordPress (${timeLeft}s)`;
+      
+      // Update progress bar
+      updateProgressBar(timeLeft, totalTime);
+      
+      if (timeLeft <= 0) {
+        clearInterval(countdownInterval);
+        postToWordPress();
+      }
+    }, 1000);
+    
+    // Set auto-post timer
+    autoPostTimer = setTimeout(() => {
+      postToWordPress();
+    }, 30000);
+  }
+  
+  function updateProgressBar(timeLeft, totalTime) {
+    const progress = ((totalTime - timeLeft) / totalTime) * 100;
+    confirmBtn.style.setProperty('--progress-width', `${progress}%`);
+  }
+  
+  function clearAutoPostTimers() {
+    if (autoPostTimer) {
+      clearTimeout(autoPostTimer);
+      autoPostTimer = null;
+    }
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
+    // Remove countdown styling and reset progress
+    confirmBtn.classList.remove('countdown');
+    confirmBtn.style.removeProperty('--progress-width');
+    // Reset button text
+    const btnText = confirmBtn.querySelector('.btn-text');
+    if (btnText) {
+      btnText.textContent = 'Post to WordPress';
+    }
+  }
+  
+  function cancelAutoPost() {
+    clearAutoPostTimers();
   }
 
   // Small Button Loading States (for regenerate buttons)
@@ -249,6 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
       setButtonLoading(generateBtn, false);
       stopThinking();
       
+      // Start auto-post countdown
+      startAutoPostCountdown();
+      
       // Re-attach event listeners for the regenerate buttons after content is shown
       setTimeout(() => {
         const titleBtn = document.getElementById('regenerate-title-btn');
@@ -282,6 +364,9 @@ document.addEventListener('DOMContentLoaded', () => {
   async function regenerateTitle() {
     console.log('Regenerate title function called!');
     if (!lastContent) return;
+    
+    // Reset the post button countdown immediately when button is pressed
+    startAutoPostCountdown();
     
     console.log('Regenerating title for content:', lastContent.substring(0, 100) + '...');
     setSmallButtonLoading(regenerateTitleBtn, true);
@@ -328,6 +413,9 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Regenerate category function called!');
     if (!lastContent) return;
     
+    // Reset the post button countdown immediately when button is pressed
+    startAutoPostCountdown();
+    
     setSmallButtonLoading(regenerateCategoryBtn, true);
     try {
       const res = await fetch('/api/regenerate-category', {
@@ -364,7 +452,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Post to WordPress
   async function postToWordPress() {
-    showLoading('Posting to WordPress...');
+    // Clear auto-post timers since we're posting now
+    clearAutoPostTimers();
+    
+    showLoading('Posting to WordPress...', false);
     setButtonLoading(confirmBtn, true);
     startThinking();
 
@@ -417,7 +508,15 @@ document.addEventListener('DOMContentLoaded', () => {
     await generateContent(value);
   });
 
-  confirmBtn.addEventListener('click', postToWordPress);
+  confirmBtn.addEventListener('click', () => {
+    // If auto-post is running, cancel it and post immediately
+    if (autoPostTimer || countdownInterval) {
+      cancelAutoPost();
+      postToWordPress();
+    } else {
+      postToWordPress();
+    }
+  });
 
   regenerateBtn.addEventListener('click', async () => {
     if (lastPrompt) {
