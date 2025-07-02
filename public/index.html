@@ -10,7 +10,7 @@
   <div class="container">
     <!-- <header class="app-header">
       <h1>AI Blog Generator</h1>
-      <a href="/logout" class="logout-btn">Logout</a>
+     
     </header> -->
     
     <!-- AI Face with Status Bar -->
@@ -82,12 +82,26 @@
 
     <!-- Generated Content -->
     <div id="result" class="hidden">
+      
+      <!-- Title and Category Section -->
+      <div class="post-meta">
+        <div class="meta-group">
+          <label for="post-title">Title:</label>
+          <textarea id="post-title" name="post-title" placeholder="Enter post title..." rows="3"></textarea>
+          <button id="regenerate-title-btn" class="small-btn" title="Regenerate title">🔄</button>
+        </div>
+        <div class="meta-group">
+          <label for="post-category">Category:</label>
+          <input type="text" id="post-category" name="post-category" placeholder="Enter category...">
+          <button id="regenerate-category-btn" class="small-btn" title="Regenerate category">🔄</button>
+        </div>
+      </div>
 
       <div class="content-preview">
         <pre id="generated-content"></pre>
       </div>
       <div class="action-buttons">
-        <button id="regenerate-btn" class="secondary-btn">Regenerate</button>
+        <button id="regenerate-btn" class="secondary-btn">Regenerate Content</button>
         <button id="confirm-btn" class="primary-btn">
           <span class="btn-text">Post to WordPress</span>
           <span class="btn-loading hidden">Posting...</span>
@@ -101,11 +115,9 @@
     </div>
 
     <!-- Error Display -->
-    <div id="error" class="error hidden">
+    <div id="error" class="error-container hidden">
       <div class="error-icon">❌</div>
-      <h3>Error</h3>
       <div id="error-message"></div>
-      <button id="retry-btn" class="secondary-btn">Try Again</button>
     </div>
 
     
@@ -117,6 +129,7 @@
         <span class="status-label">Python Server:</span>
         <span id="python-status" class="status-value">Checking...</span>
       </div>
+      <a href="/logout" class="logout-btn">Logout</a>
     </div>
   <script src="script.js"></script>
 </body>

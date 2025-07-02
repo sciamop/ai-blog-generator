@@ -140,25 +140,7 @@ body {
   50% { transform: scaleY(0.1); }
 }
 
-/* Thinking/Processing State */
-.eye.thinking {
-  animation: thinking 2s ease-in-out infinite;
-}
 
-.eye.thinking .pupil {
-  animation: pupilMove 2s ease-in-out infinite;
-}
-
-@keyframes thinking {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-@keyframes pupilMove {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-}
 
 
 
@@ -178,7 +160,7 @@ h1 {
   background: #f8f9fa;
   padding: 12px 20px;
   border-radius: 8px;
-  border-left: 4px solid #28a745;
+  /* border-left: 4px solid #28a745; */
   min-width: 200px;
   flex: 1;
   margin: 0 20px;
@@ -187,12 +169,12 @@ h1 {
 .status-indicator {
   width: 12px;
   height: 12px;
-  border-radius: 50%;
+  border-radius: 100%;
   margin-left: 8px;
 }
 
 .status-indicator.ready { background: #28a745; }
-.status-indicator.loading { background: #ffc107; animation: pulse 1.5s infinite; }
+.status-indicator.loading { background: #ffc107; animation: pulse 1.5s infinite; padding:1px; }
 .status-indicator.error { background: #dc3545; }
 .status-indicator.success { background: #28a745; }
 
@@ -301,7 +283,7 @@ button:disabled {
 /* Loading State */
 .loading {
   text-align: center;
-  padding: 40px 20px;
+  padding: 20px 20px;
 }
 
 .mouth-container {
@@ -321,6 +303,7 @@ button:disabled {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   /* gap: 4px; */
+  gap: 0;
   /* padding: 20px; */
   position: absolute;
   top: 5px;
@@ -362,6 +345,70 @@ button:disabled {
   }
 }
 
+/* Post Meta Section */
+.post-meta {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.meta-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.meta-group:last-child {
+  margin-bottom: 0;
+}
+
+.meta-group label {
+  font-weight: 600;
+  color: #495057;
+  min-width: 80px;
+  font-size: 0.9rem;
+}
+
+.meta-group input,
+.meta-group textarea {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  resize: vertical;
+  min-height: 40px;
+}
+
+.meta-group input:focus,
+.meta-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.meta-group textarea {
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.small-btn {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  min-height: auto;
+  background: #6c757d;
+  color: white;
+  border-radius: 4px;
+}
+
+.small-btn:hover {
+  background: #5a6268;
+  transform: none;
+}
+
 /* Content Preview */
 .content-preview {
   background: #f8f9fa;
@@ -392,7 +439,7 @@ button:disabled {
 /* Success State */
 .success {
   text-align: center;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .success-icon {
@@ -420,7 +467,7 @@ button:disabled {
 }
 
 /* Error State */
-.error {
+.error-container {
   background: #f8d7da;
   border: 2px solid #f5c6cb;
   border-radius: 12px;

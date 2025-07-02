@@ -29,7 +29,12 @@ const requireAuth = (req, res, next) => {
   if (req.session.authenticated) {
     next();
   } else {
-    res.redirect('/login');
+    // For API routes, return JSON error instead of redirecting
+    if (req.path.startsWith('/api/')) {
+      res.status(401).json({ error: 'Authentication required', redirect: '/login' });
+    } else {
+      res.redirect('/login');
+    }
   }
 };
 
