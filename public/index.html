@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Blog Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- <header class="app-header">
+      <h1>AI Blog Generator</h1>
+      <a href="/logout" class="logout-btn">Logout</a>
+    </header> -->
+    
+    <!-- AI Face with Status Bar -->
+    <div class="ai-face-container">
+      <div class="ai-face">
+        <div class="eye left-eye">
+          <div class="pupil"></div>
+        </div>
+        
+        <!-- Status Bar in Center -->
+        <div id="status-bar" class="status-bar">
+          <div id="status-text">Ready to generate content</div>
+          <div id="status-indicator" class="status-indicator ready"></div>
+        </div>
+        
+        <div class="eye right-eye">
+          <div class="pupil"></div>
+        </div>
+      </div>
+      
+
+    </div>
+
+    <!-- Main Form -->
+    <form id="generate-form">
+      <div class="input-group">
+        <!-- <label for="prompt">Prompt or URL:</label> -->
+        <input type="text" id="prompt" name="prompt" placeholder="Enter a prompt or URL..." required>
+        <!-- <div class="input-hint">Enter a prompt or paste a URL to generate content about</div> -->
+      </div>
+      <button type="submit" id="generate-btn">
+        <span class="btn-text">Generate Content</span>
+        <span class="btn-loading hidden">Generating...</span>
+      </button>
+    </form>
+
+    <!-- Loading State -->
+    <div id="loading" class="loading hidden">
+      <div class="mouth-container">
+        <div class="teeth-grid">
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+          <div class="tooth"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generated Content -->
+    <div id="result" class="hidden">
+
+      <div class="content-preview">
+        <pre id="generated-content"></pre>
+      </div>
+      <div class="action-buttons">
+        <button id="regenerate-btn" class="secondary-btn">Regenerate</button>
+        <button id="confirm-btn" class="primary-btn">
+          <span class="btn-text">Post to WordPress</span>
+          <span class="btn-loading hidden">Posting...</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Success State -->
+    <div id="success" class="hidden">
+      <a id="wp-url" href="#" target="_blank" class="wp-link">View Post on WordPress</a>
+    </div>
+
+    <!-- Error Display -->
+    <div id="error" class="error hidden">
+      <div class="error-icon">❌</div>
+      <h3>Error</h3>
+      <div id="error-message"></div>
+      <button id="retry-btn" class="secondary-btn">Try Again</button>
+    </div>
+
+    
+  </div>
+
+      <!-- Connection Status -->
+    <div id="connection-status" class="connection-status">
+      <div class="status-item">
+        <span class="status-label">Python Server:</span>
+        <span id="python-status" class="status-value">Checking...</span>
+      </div>
+    </div>
+  <script src="script.js"></script>
+</body>
+</html> 

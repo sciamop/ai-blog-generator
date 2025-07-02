@@ -1,0 +1,14 @@
+.env
+automated-request.py
+SPRING 2025 blog.code-workspace
+wordpress_uploader.py
+WordPressImageUploader.py
+Screenshot 2025-06-11 120441.png
+docker logs docker-wordpress-theme_db_1.csv
+downloads/
+node_modules/
+temp/
+_pycache_/
+.vscode/
+package-lock.json
+fb_user_data/
