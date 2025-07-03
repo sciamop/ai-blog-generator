@@ -12,3 +12,4 @@ _pycache_/
 .vscode/
 package-lock.json
 fb_user_data/
+rag-system/

@@ -38,7 +38,10 @@
     <form id="generate-form">
       <div class="input-group">
         <!-- <label for="prompt">Prompt or URL:</label> -->
-        <input type="text" id="prompt" name="prompt" placeholder="Enter a prompt or URL..." required>
+        <div class="input-with-clear">
+          <input type="text" id="prompt" name="prompt" placeholder="Enter a prompt or URL..." required>
+          <button type="button" id="clear-prompt-btn" class="clear-btn" title="Clear input">✕</button>
+        </div>
         <!-- <div class="input-hint">Enter a prompt or paste a URL to generate content about</div> -->
       </div>
       <button type="submit" id="generate-btn">
@@ -86,12 +89,10 @@
       <!-- Title and Category Section -->
       <div class="post-meta">
         <div class="meta-group">
-          <label for="post-title">Title:</label>
           <textarea id="post-title" name="post-title" placeholder="Enter post title..." rows="3"></textarea>
           <button id="regenerate-title-btn" class="small-btn" title="Regenerate title">🔄</button>
         </div>
         <div class="meta-group">
-          <label for="post-category">Category:</label>
           <input type="text" id="post-category" name="post-category" placeholder="Enter category...">
           <button id="regenerate-category-btn" class="small-btn" title="Regenerate category">🔄</button>
         </div>

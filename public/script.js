@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     errorMessage.textContent = message;
     hideAllOtherStates(); // Hide other states first
     errorDiv.classList.remove('hidden'); // Then show error
+    form.classList.remove('hidden'); // Show the form so user can retry
     hideLoading();
     stopThinking();
   }
