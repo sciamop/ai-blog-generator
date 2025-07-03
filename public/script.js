@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // DOM Elements
   const form = document.getElementById('generate-form');
   const promptInput = document.getElementById('prompt');
+  const clearPromptBtn = document.getElementById('clear-prompt-btn');
   const generateBtn = document.getElementById('generate-btn');
   const resultDiv = document.getElementById('result');
   const generatedContent = document.getElementById('generated-content');
@@ -40,6 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
   updateStatus('ready', 'Ready to generate content');
   checkConnections();
   startBlinking();
+  
+  // Clear button functionality
+  clearPromptBtn.addEventListener('click', () => {
+    promptInput.value = '';
+    promptInput.focus();
+  });
   
   // Wait a bit for DOM to be fully ready, then check buttons again
   setTimeout(() => {

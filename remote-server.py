@@ -22,7 +22,7 @@ WP_URL = os.getenv('WP_URL')
 WP_USERNAME = os.getenv('WP_USERNAME')
 WP_APP_PASSWORD = os.getenv('WP_APP_PASSWORD')
 OPENWEBUI_API_URL = os.getenv('OPENWEBUI_API_URL', 'http://localhost:11434/api/chat')
-MODEL_NAME = os.getenv('MODEL_NAME', 'social-media-influencer')
+MODEL_NAME = os.getenv('MODEL_NAME', 'social-media-influencer-32b')
 
 uploader = WordPressImageUploader(WP_URL, WP_USERNAME, WP_APP_PASSWORD)
 
